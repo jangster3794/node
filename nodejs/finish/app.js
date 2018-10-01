@@ -8,7 +8,6 @@ var pdxlax = {
 
 var pl = flight(pdxlax)
 pl.triggerDepart()
-console.log(pl.getInformation())
 
 var ausdca = {
     number : 382,
