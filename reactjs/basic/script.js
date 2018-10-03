@@ -1,42 +1,24 @@
-class StopWatch extends React.Component {
-    state = {lapse: 0, running: false}
-    handleRunClick = () => {
-        this.setState(state => {
-            if (state.running){
-                clearInterval(this.timer)
-            }
-            else{
-                const startTime = Date.now() - this.state.lapse                
-                this.timer = setInterval(()=>{
-                    this.setState({
-                        lapse:Date.now() - startTime
-                    })
-                })
-            }
-            return {running: !state.running}
-        })
+class NameForm extends React.Component {
+    handleSubmit = event =>{
+        event.preventDefault()
+        console.log(event.target[0].value)
     }
-    handleClearClick = () => {
-        console.log('Clicked.')
-        clearInterval(this.timer)
-        this.setState({lapse:0,running:false})
-    }
-    compnentWillUnmount(){
-        clearInterval(this.timer)
-    }
-    render(){
-        const {lapse, running} = this.state
-            return (
-                <div>
-                    <label>{lapse}ms</label>
-                    <button onClick ={this.handleRunClick} >{running ? 'Stop' : 'Start'}</button>
-                    <button onClick ={this.handleClearClick} >Clear</button>
-                </div>
-            )
+    
+    
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Name:
+                    <input type="text"/>
+                </label>
+                <button type="submit">Submit</button>
+            </form>
+        )
     }
 }
 
-const element = <StopWatch/>
+const element = <NameForm/>
 ReactDOM.render(
     element,
     document.getElementById('root')
