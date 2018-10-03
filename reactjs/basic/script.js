@@ -1,8 +1,44 @@
-const rootElement = document.getElementById('root')
-function tick(){
-    const time = new Date().toLocaleTimeString()
-    const element = <h3>It is <input value={time}/> </h3>
-    ReactDOM.render(element,rootElement)
+const state = {eventCount:0,username:''}
+
+function App (){
+    return(
+        <div>
+            <p>
+                There have been {state.eventCount} events
+            </p>
+            <p>
+                <button onClick={increment}>Click Me</button>
+            </p>
+            <p> You typed: {state.username}</p>
+            <p>
+                <input onChange={updateUsername}/>
+            </p>
+        </div>
+    )
 }
-tick()
-setInterval(tick,1000)
+
+function increment () {
+        setState({
+        eventCount: state.eventCount +1,
+        })
+    }
+
+function updateUsername(event) {
+    console.log(event)
+    setState({
+        username: event.target.value
+    })
+}
+
+function setState(newState){
+    Object.assign(state,newState)
+    renderApp()
+}
+
+function renderApp(){
+    ReactDOM.render(
+        <App/>,
+        document.getElementById('root')
+    )
+}
+renderApp()
