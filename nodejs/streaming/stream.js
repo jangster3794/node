@@ -1,5 +1,14 @@
 var fs = require('fs');
 var stream = fs.createReadStream('data.json');
+
+stream.pause()
+console.log('paused')
+
+setTimeout(function(){
+    console.log('Resuming...........')
+    stream.resume()
+}, 1000)
+
 stream.on ('data', function(chunk){
     console.log('------------------START--------------')
     console.log(chunk.toString())
