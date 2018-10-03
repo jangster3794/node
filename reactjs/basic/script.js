@@ -1,14 +1,8 @@
-function Message({message}){
-    return(
-        <div>
-            {message? (<div>{message}</div>): (
-                <div>No Message</div>
-            )}
-        </div>
-    )
+const rootElement = document.getElementById('root')
+function tick(){
+    const time = new Date().toLocaleTimeString()
+    const element = <h3>It is <input value={time}/> </h3>
+    ReactDOM.render(element,rootElement)
 }
-
-ReactDOM.render(
-    <Message message={'Hi.'}/>,
-    document.getElementById('root')
-)
+tick()
+setInterval(tick,1000)
