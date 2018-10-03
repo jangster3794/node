@@ -1,27 +1,14 @@
-function SayHelloAsFunction(props){
-    return (
+function Message({message}){
+    return(
         <div>
-            Hello {firstName} {lastName}
+            {message? (<div>{message}</div>): (
+                <div>No Message</div>
+            )}
         </div>
     )
 }
 
-SayHelloAsFunction.proptypes = {
-    firstName: PropTypes.string.isRequired,
-    lastName : PropTypes.string.isRequired,
-}
-
-class SayHelloAsClass extends React.Component {
-    static propTypes = {
-        firstName: PropTypes.string.isRequired,
-        lastName : PropTypes.string.isRequired,
-    }
-    render(){
-        const {firstName,lastName} = this.props
-        return(
-            <div>
-                Hello {props.firstName} {props.lastName}!
-            </div>
-        )
-    }
-}
+ReactDOM.render(
+    <Message message={'Hi.'}/>,
+    document.getElementById('root')
+)
