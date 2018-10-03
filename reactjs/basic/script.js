@@ -1,44 +1,40 @@
-const state = {eventCount:0,username:''}
-
-function App (){
-    return(
-        <div>
-            <p>
-                There have been {state.eventCount} events
-            </p>
-            <p>
-                <button onClick={increment}>Click Me</button>
-            </p>
-            <p> You typed: {state.username}</p>
-            <p>
-                <input onChange={updateUsername}/>
-            </p>
-        </div>
-    )
-}
-
-function increment () {
-        setState({
-        eventCount: state.eventCount +1,
+class StopWatch extends React.Component {
+    state = {lapse: 0, running: false}
+    handleRunClick = () => {
+        this.setState(state => {
+            if (state.running){
+                clearInterval(this.timer)
+            }
+            else{
+                const startTime = Date.now() - this.state.lapse                
+                this.timer = setInterval(()=>{
+                    this.setState({
+                        lapse:Date.now() - startTime
+                    })
+                })
+            }
+            return {running: !state.running}
         })
     }
-
-function updateUsername(event) {
-    console.log(event)
-    setState({
-        username: event.target.value
-    })
+    handleClearClick = () => {
+        console.log('Clicked.')
+        clearInterval(this.timer)
+        this.setState({lapse:0,running:false})
+    }
+    render(){
+        const {lapse, running} = this.state
+            return (
+                <div>
+                    <label>{lapse}ms</label>
+                    <button onClick ={this.handleRunClick} >{running ? 'Stop' : 'Start'}</button>
+                    <button onClick ={this.handleClearClick} >Clear</button>
+                </div>
+            )
+    }
 }
 
-function setState(newState){
-    Object.assign(state,newState)
-    renderApp()
-}
-
-function renderApp(){
-    ReactDOM.render(
-        <App/>,
-        document.getElementById('root')
-    )
-}
-renderApp()
+const element = <StopWatch/>
+ReactDOM.render(
+    element,
+    document.getElementById('root')
+)
