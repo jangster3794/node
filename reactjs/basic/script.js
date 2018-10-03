@@ -1,24 +1,66 @@
-class NameForm extends React.Component {
-    handleSubmit = event =>{
-        event.preventDefault()
-        console.log(event.target[0].value)
+class MyFancyForm extends React.Component {
+    static avaialbleOptions = ['apple', 'grape','cherry','orange','pear','peach']
+
+    state={multiline: '', commaSeparated: ''}
+
+    handleCommaSeparatedChange = event => {
+        const {value} = event.target
+        this.setState({
+            commaSeparated: value,
+            multiline: value.split(',').map(v=>v.trim()).filter(Boolean).join('\n')
+        })
     }
-    
-    
-    render() {
+    handleMultiLineChange = event => {
+        const {value} = event.target
+        this.setState({
+            commaSeparated: value.split('\n').map(v=>v.trim()).filter(Boolean).join(','),
+            multiline: value
+        })
+    }
+    handleMultiSelectChange = event => {
+        console.log('handleMultiSelectChanged')
+    }
+
+    render(){
+        const {commaSeparated,multiline} = this.state
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text"/>
-                </label>
-                <button type="submit">Submit</button>
+            <form>
+                <div>
+                    <label>
+                        comma separated values:
+                        <br />
+                        <input
+                            type = "text"
+                            value={commaSeparated}
+                            onChange={
+                                this.handleCommaSeparatedChange
+                            }
+                            />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                            multiline values:
+                            <br />
+                            <textarea value={multiline}
+                            rows={MyFancyForm.avaialbleOptions.length}
+                            onChange={
+                                this.handleMultiLineChange
+                            }
+                            />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                            multiselect values:
+                    </label>
+                </div>
             </form>
         )
     }
 }
 
-const element = <NameForm/>
+const element = <MyFancyForm/>
 ReactDOM.render(
     element,
     document.getElementById('root')
