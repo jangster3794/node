@@ -1,4 +1,4 @@
-var app = require ('../../app')
-    flights = require ('../data')
+var app = require ('../../app'),
+    flights = require ('../data');
 
-module.exports = app(flights)
+module.exports = app(flights);
